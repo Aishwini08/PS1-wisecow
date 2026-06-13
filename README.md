@@ -37,6 +37,55 @@ PS1-wisecow/
 - kubectl
 - openssl
 
+## Setup and Deployment
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Aishwini08/PS1-wisecow.git
+cd PS1-wisecow
+```
+
+### 2. Build Docker image
+```bash
+docker build -t wisecow:latest .
+```
+
+### 3. Load image into Minikube
+```bash
+minikube image load wisecow:latest
+```
+
+### 4. Deploy to Kubernetes
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl apply -f k8s/ingress.yaml
+```
+
+### 5. TLS Setup
+```bash
+# Generate self-signed certificate
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=wisecow.local/O=wisecow"
+
+# Create Kubernetes TLS secret
+kubectl create secret tls wisecow-tls --cert=tls.crt --key=tls.key
+```
+
+### 6. Enable Ingress
+```bash
+minikube addons enable ingress
+```
+
+### 7. Access the Application
+```bash
+# Start minikube tunnel
+minikube tunnel
+```
+
+Add this to your hosts file (`C:\Windows\System32\drivers\etc\hosts`):
+
 
 ## CI/CD Pipeline
 The GitHub Actions workflow automatically triggers on every push to the 
