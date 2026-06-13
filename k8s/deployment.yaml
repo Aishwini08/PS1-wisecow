@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: wisecow
-          image: wisecow:latest
+          image: ghcr.io/aishwini08/wisecow:380bf4ead871e47fdcc32fd632e76fdccd06ab31
           imagePullPolicy: Never
           ports:
             - containerPort: 4499
