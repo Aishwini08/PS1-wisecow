@@ -1,28 +1,49 @@
-# Cow wisdom web server
+# Wisecow Application
+
+## Overview
+Wisecow is a web application that serves a random quote via an ASCII cow 
+every time the user visits the browser. It is containerized using Docker 
+and deployed on Kubernetes with TLS encryption and an automated CI/CD pipeline.
+
+## Project Structure
+
+PS1-wisecow/
+
+├── wisecow/
+
+│   ├── wisecow.sh
+
+│   └── Dockerfile
+
+├── k8s/
+
+│   ├── deployment.yaml
+
+│   ├── service.yaml
+
+│   └── ingress.yaml
+
+├── .github/
+
+│   └── workflows/
+
+│       └── deploy.yml
+
+└── README.md
 
 ## Prerequisites
+- Docker
+- Minikube
+- kubectl
+- openssl
 
-```
-sudo apt install fortune-mod cowsay -y
-```
 
-## How to use?
-
-1. Run `./wisecow.sh`
-2. Point the browser to server port (default 4499)
-
-## What to expect?
-![wisecow](https://github.com/nyrahul/wisecow/assets/9133227/8d6bfde3-4a5a-480e-8d55-3fef60300d98)
-
-# Problem Statement
-Deploy the wisecow application as a k8s app
-
-## Requirement
-1. Create Dockerfile for the image and corresponding k8s manifest to deploy in k8s env. The wisecow service should be exposed as k8s service.
-2. Github action for creating new image when changes are made to this repo
-3. [Challenge goal]: Enable secure TLS communication for the wisecow app.
-
-## Expected Artifacts
-1. Github repo containing the app with corresponding dockerfile, k8s manifest, any other artifacts needed.
-2. Github repo with corresponding github action.
-3. Github repo should be kept private and the access should be enabled for following github IDs: nyrahul
+## CI/CD Pipeline
+The GitHub Actions workflow automatically triggers on every push to the 
+main branch. It:
+1. Checks out the code
+2. Logs into GitHub Container Registry (GHCR)
+3. Builds the Docker image
+4. Pushes the image to GHCR
+5. Updates the deployment.yaml with the new image tag
+6. Commits the updated deployment back to the repository
