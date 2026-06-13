@@ -63,6 +63,7 @@ kubectl apply -f k8s/ingress.yaml
 ```
 
 ### 5. TLS Setup
+
 ```bash
 # Generate self-signed certificate
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
